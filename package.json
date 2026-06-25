@@ -1,7 +1,7 @@
 {
   "name": "resume-scorer-mcp",
   "version": "0.1.0",
-  "description": "MCP server that scores a resume PDF against the HackerRank hiring-agent rubric.",
+  "description": "MCP server that scores a structured resume against a deterministic 4-category engineering rubric (open source, self projects, production, technical skills).",
   "type": "module",
   "main": "dist/index.js",
   "bin": { "resume-scorer-mcp": "dist/index.js" },
@@ -12,7 +12,7 @@
     "start": "node dist/index.js",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["mcp", "model-context-protocol", "resume", "hiring", "evaluation", "ats", "claude", "anthropic"],
+  "keywords": ["mcp", "model-context-protocol", "resume", "hiring", "evaluation", "ats", "scoring", "claude", "anthropic"],
   "author": "Khushal Bhandari <khushalbhandari25@icloud.com> (https://www.khushalbhandari.everyai.in)",
   "license": "MIT",
   "homepage": "https://github.com/KhushalB25/resume-scorer-mcp",

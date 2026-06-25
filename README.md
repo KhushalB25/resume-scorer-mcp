@@ -1,6 +1,6 @@
 # resume-scorer-mcp
 
-> MCP server that scores a structured resume against the **HackerRank hiring-agent** rubric. Get a numeric score, evidence per category, bonus points, deductions, and concrete improvement areas — all without an LLM call.
+> MCP server that scores a structured resume against a deterministic 4-category engineering rubric. Numeric score, evidence per category, bonus points, deductions, concrete improvement areas — all without an LLM call.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 [![Node ≥ 18](https://img.shields.io/badge/node-%E2%89%A518-green.svg)](https://nodejs.org)
@@ -8,7 +8,7 @@
 
 ## What it scores
 
-Same four categories as HackerRank's open-source [interviewstreet/hiring-agent](https://github.com/interviewstreet/hiring-agent):
+Four categories tuned for modern engineering profiles:
 
 | Category | Max |
 |---|---|
@@ -17,14 +17,14 @@ Same four categories as HackerRank's open-source [interviewstreet/hiring-agent](
 | Production Experience | 25 |
 | Technical Skills | 10 |
 | Bonus (portfolio, LinkedIn, etc.) | +20 |
-| Deductions (missing links, tutorials) | up to −15 |
-| **Total** | **120** |
+| Deductions (missing links, tutorial projects) | up to −15 |
+| **Total** | **100 (+20 bonus)** |
 
 ## Why use it
 
 - **Candidates** — self-check before applying. Iterate until score crosses your target.
 - **Recruiters** — bulk-screen JSON Resumes without sending content to a paid LLM.
-- **AI agents** — a deterministic scoring primitive in agent workflows.
+- **AI agents** — a deterministic scoring primitive for agent workflows.
 - **Privacy** — no resume content leaves your machine.
 
 ## Install
@@ -58,7 +58,7 @@ Add to `claude_desktop_config.json`:
 
 Restart Claude Desktop. Ask:
 
-> "Score this resume against the hiring rubric" + paste a JSON Resume
+> "Score this resume against the rubric" + paste a JSON Resume
 
 ## Tools
 
@@ -70,20 +70,20 @@ Score a structured resume in [JSON Resume](https://jsonresume.org/schema/) forma
 {
   "resume_json": {
     "basics": {
-      "name": "Khushal Bhandari",
-      "url": "https://www.khushalbhandari.everyai.in",
+      "name": "Your Name",
+      "url": "https://yoursite.dev",
       "profiles": [
-        { "network": "GitHub",   "url": "https://github.com/KhushalB25" },
-        { "network": "LinkedIn", "url": "https://linkedin.com/in/khushal-bhandari" }
+        { "network": "GitHub",   "url": "https://github.com/you" },
+        { "network": "LinkedIn", "url": "https://linkedin.com/in/you" }
       ]
     },
     "work": [
-      { "name": "Phoenix Rising AI", "startDate": "2025-03", "endDate": "2026-04",
-        "highlights": ["Built conversational LLM chat over OpenAI/Claude/Gemini …"] }
+      { "name": "Company", "startDate": "2025-03", "endDate": "2026-04",
+        "highlights": ["Built X with Y …"] }
     ],
     "projects": [
-      { "name": "QuickSkill", "url": "https://www.everyai.in",
-        "description": "AI-powered cognitive training using OpenAI/Claude…",
+      { "name": "Project", "url": "https://project.dev",
+        "description": "Real-time LLM thing using OpenAI/Claude…",
         "technologies": ["Next.js", "Firebase", "OpenAI"] }
     ],
     "skills": [{ "name": "Languages", "keywords": ["Python", "TypeScript", "React"] }]
@@ -103,19 +103,19 @@ Best-effort scoring of plain text. Less accurate. Use `score_resume` when possib
 {
   "scores": {
     "open_source":     { "score": 6,  "max": 35, "evidence": "GitHub URL present but no external contributions detected …" },
-    "self_projects":   { "score": 22, "max": 30, "evidence": "Per-project breakdown: QuickSkill: 3 complexity signals, link present → 8/10 …" },
+    "self_projects":   { "score": 22, "max": 30, "evidence": "Per-project breakdown: Project: 3 complexity signals, link present -> 8/10 …" },
     "production":      { "score": 19, "max": 25, "evidence": "~3.1 years total production tenure across 3 role(s) (LLM production weighting +2)." },
     "technical_skills":{ "score": 9,  "max": 10, "evidence": "18 distinct technologies/keywords detected." }
   },
-  "bonus_points": { "total": 3, "breakdown": "+2 portfolio URL · +1 LinkedIn profile" },
-  "deductions":   { "total": 2, "reasons":   "-2 for 1 project(s) without links: Stock Monitoring" },
+  "bonus_points": { "total": 3, "breakdown": "+2 portfolio URL - +1 LinkedIn profile" },
+  "deductions":   { "total": 2, "reasons":   "-2 for 1 project(s) without links: …" },
   "key_strengths": [
     "Solid production tenure with multi-year track record.",
     "Personal projects show technical depth and shipped artefacts.",
     "Broad polyglot stack signal."
   ],
   "areas_for_improvement": [
-    "Land 2-3 merged pull requests to popular open-source repos to break out of the ≤10 self-only cap.",
+    "Land 2-3 merged pull requests to popular open-source repos to break out of the <=10 self-only cap.",
     "Add live demo or repo URL to every project to remove missing-link deductions."
   ],
   "total": 59,
@@ -139,9 +139,9 @@ Test with [@modelcontextprotocol/inspector](https://github.com/modelcontextproto
 npx @modelcontextprotocol/inspector node dist/index.js
 ```
 
-## Rubric attribution
+## Rubric design
 
-The scoring rubric is adapted from [interviewstreet/hiring-agent](https://github.com/interviewstreet/hiring-agent) (MIT, © HackerRank). This server reimplements the deterministic portions in TypeScript without requiring an LLM backend.
+The scoring rubric is the author's own design. Bands are tuned for early-career to mid-career software engineers. Categories and weightings can be customised by forking `src/index.ts` — pure functions, no external scoring service.
 
 ## Author
 

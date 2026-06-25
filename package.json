@@ -1,0 +1,30 @@
+{
+  "name": "resume-scorer-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that scores a resume PDF against the HackerRank hiring-agent rubric.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": { "resume-scorer-mcp": "dist/index.js" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["mcp", "model-context-protocol", "resume", "hiring", "evaluation", "ats", "claude", "anthropic"],
+  "author": "Khushal Bhandari <khushalbhandari25@icloud.com> (https://www.khushalbhandari.everyai.in)",
+  "license": "MIT",
+  "homepage": "https://github.com/KhushalB25/resume-scorer-mcp",
+  "repository": { "type": "git", "url": "git+https://github.com/KhushalB25/resume-scorer-mcp.git" },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.9",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3"
+  }
+}
